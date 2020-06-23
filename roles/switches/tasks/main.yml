@@ -30,6 +30,7 @@
   systemd:
     name: rsyslog
     state: stopped
+  ignore_errors: yes
 
 - name: Disable rsyslog
   systemd:
