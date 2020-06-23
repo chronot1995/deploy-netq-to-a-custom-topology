@@ -1,0 +1,27 @@
+# Created by Topology-Converter v4.6.8
+#    Template Revision: v4.6.8
+#    https://github.com/cumulusnetworks/topology_converter
+#    using topology data
+
+[switches]
+upn ansible_host=192.168.200.3
+cox ansible_host=192.168.200.4
+colo-asr01 ansible_host=192.168.200.5
+colo-asr02 ansible_host=192.168.200.6
+colo-core1 ansible_host=192.168.200.7
+colo-core2 ansible_host=192.168.200.8
+colo-swt01 ansible_host=192.168.200.9
+colo-swt02 ansible_host=192.168.200.10
+colo-swt03 ansible_host=192.168.200.11
+colo-swt04 ansible_host=192.168.200.12
+example1 ansible_host=192.168.200.13
+example2 ansible_host=192.168.200.14
+iglass ansible_host=192.168.200.15
+sdclan ansible_host=192.168.200.16
+guestnetwork ansible_host=192.168.200.17
+
+[all:vars]
+ansible_user=cumulus
+ansible_become_pass=CumulusLinux!
+ansible_password=CumulusLinux!
+ansible_ssh_pass=CumulusLinux!

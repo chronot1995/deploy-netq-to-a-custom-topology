@@ -1,0 +1,38 @@
+---
+
+- name: Add NetQ 3.x Repository
+  apt_repository:
+    repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-3.0
+    state: present
+
+- name: Stop NTP
+  systemd:
+    name: ntp
+    state: stopped
+
+- name: Disable NTP
+  systemd:
+    name: ntp
+    enabled: no
+
+- name: Start NTP in a VRF
+  systemd:
+    name: ntp@mgmt
+    state: started
+    daemon_reload: yes
+
+- name: Enable NTP in a VRF on boot
+  systemd:
+    name: ntp@mgmt
+    enabled: yes
+
+- name: Install NetQ Agent
+  apt:
+    pkg: netq-agent
+    state: present
+    update_cache: yes
+
+- name: Restart AIR agent (configures NetQ Agent)
+  systemd:
+    name: air-agent
+    state: restarted
