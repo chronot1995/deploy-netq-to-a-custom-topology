@@ -26,11 +26,46 @@
     name: ntp@mgmt
     enabled: yes
 
-- name: Install NetQ Agent
+- name: Stop rsyslog
+  systemd:
+    name: rsyslog
+    state: stopped
+
+- name: Disable rsyslog
+  systemd:
+    name: rsyslog
+    enabled: no
+
+- name: Start rsyslog in a VRF
+  systemd:
+    name: rsyslog@mgmt
+    state: started
+    daemon_reload: yes
+
+- name: Enable rsyslog in a VRF on boot
+  systemd:
+    name: rsyslog@mgmt
+    enabled: yes
+
+- name: Install NetQ Agent and NetQ CLI
   apt:
-    pkg: netq-agent
+    pkg: "{{item}}"
     state: present
     update_cache: yes
+  with_items:
+    - netq-agent
+    - netq-apps
+
+- name: Configure NetQ Agent
+  command: sudo netq config add agent server 192.168.200.18 vrf mgmt
+
+- name: Configure NetQ CLI
+  command: sudo netq config add cli server 192.168.200.18 vrf mgmt
+
+- name: Restart NetQ Agent and NetQ CLI
+  systemd:
+    name: netq-agent
+    state: restarted
 
 - name: Restart AIR agent (configures NetQ Agent)
   systemd:
