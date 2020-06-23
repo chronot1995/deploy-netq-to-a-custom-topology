@@ -20,6 +20,9 @@ iglass ansible_host=192.168.200.15
 sdclan ansible_host=192.168.200.16
 guestnetwork ansible_host=192.168.200.17
 
+[netq]
+netq-ts ansible_host=192.168.200.18
+
 [all:vars]
 ansible_user=cumulus
 ansible_become_pass=CumulusLinux!
