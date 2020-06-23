@@ -26,27 +26,27 @@
     name: ntp@mgmt
     enabled: yes
 
-- name: Stop rsyslog
-  systemd:
-    name: rsyslog
-    state: stopped
-  ignore_errors: yes
-
-- name: Disable rsyslog
-  systemd:
-    name: rsyslog
-    enabled: no
-
-- name: Start rsyslog in a VRF
-  systemd:
-    name: rsyslog@mgmt
-    state: started
-    daemon_reload: yes
-
-- name: Enable rsyslog in a VRF on boot
-  systemd:
-    name: rsyslog@mgmt
-    enabled: yes
+# - name: Stop rsyslog
+#   systemd:
+#     name: rsyslog
+#     state: stopped
+#   ignore_errors: yes
+#
+# - name: Disable rsyslog
+#   systemd:
+#     name: rsyslog
+#     enabled: no
+#
+# - name: Start rsyslog in a VRF
+#   systemd:
+#     name: rsyslog@mgmt
+#     state: started
+#     daemon_reload: yes
+#
+# - name: Enable rsyslog in a VRF on boot
+#   systemd:
+#     name: rsyslog@mgmt
+#     enabled: yes
 
 - name: Install NetQ Agent and NetQ CLI
   apt:
