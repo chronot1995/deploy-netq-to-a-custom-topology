@@ -64,10 +64,12 @@
     - netq-apps
 
 - name: Configure NetQ Agent
-  command: sudo netq config add agent server "{{ netqts }}" vrf mgmt
+  command: netq config add agent server "{{ netqts }}" vrf mgmt
+  become: yes
 
 - name: Configure NetQ CLI
-  command: sudo netq config add cli server "{{ netqts }}" vrf mgmt
+  command: netq config add cli server "{{ netqts }}" vrf mgmt
+  become: yes
 
 - name: Restart NetQ Agent and NetQ CLI
   systemd:
