@@ -26,16 +26,16 @@
     name: ntp@mgmt
     enabled: yes
 
- - name: Stop rsyslog
-   systemd:
-     name: rsyslog
-     state: stopped
-   ignore_errors: yes
+- name: Stop rsyslog
+  systemd:
+    name: rsyslog
+    state: stopped
+  ignore_errors: yes
 
- - name: Disable rsyslog
-   systemd:
-     name: rsyslog
-     enabled: no
+- name: Disable rsyslog
+  systemd:
+    name: rsyslog
+    enabled: no
 
 - name: Copy rsyslog configuration file
   template:
@@ -43,14 +43,14 @@
     dest: /etc/rsyslog.d/11-remotesyslog.conf
     backup: yes
 
- - name: Start rsyslog in a VRF
-   systemd:
-     name: rsyslog
-     state: started
-     daemon_reload: yes
+- name: Start rsyslog in a VRF
+  systemd:
+    name: rsyslog
+    state: started
+    daemon_reload: yes
 
- - name: Enable rsyslog in a VRF on boot
-   systemd:
+- name: Enable rsyslog in a VRF on boot
+  systemd:
      name: rsyslog
      enabled: yes
 
