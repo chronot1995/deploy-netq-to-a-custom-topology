@@ -48,6 +48,7 @@
     name: rsyslog
     state: started
     daemon_reload: yes
+  ignore_errors: yes
 
 - name: Enable rsyslog in a VRF on boot
   systemd:
