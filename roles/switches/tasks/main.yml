@@ -63,6 +63,17 @@
     - netq-agent
     - netq-apps
 
+- name: Start NetQ
+  systemd:
+    name: netqd
+    state: started
+    daemon_reload: yes
+
+- name: Enable NetQ Agent
+  systemd:
+     name: netqd
+     enabled: yes
+
 - name: Configure NetQ Agent
   command: netq config add agent server "{{ netqts }}" vrf mgmt
   become: yes
