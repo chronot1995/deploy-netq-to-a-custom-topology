@@ -45,13 +45,13 @@
 
  - name: Start rsyslog in a VRF
    systemd:
-     name: rsyslog@mgmt
+     name: rsyslog
      state: started
      daemon_reload: yes
 
  - name: Enable rsyslog in a VRF on boot
    systemd:
-     name: rsyslog@mgmt
+     name: rsyslog
      enabled: yes
 
 - name: Install NetQ Agent and NetQ CLI
