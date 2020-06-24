@@ -26,27 +26,33 @@
     name: ntp@mgmt
     enabled: yes
 
-# - name: Stop rsyslog
-#   systemd:
-#     name: rsyslog
-#     state: stopped
-#   ignore_errors: yes
-#
-# - name: Disable rsyslog
-#   systemd:
-#     name: rsyslog
-#     enabled: no
-#
-# - name: Start rsyslog in a VRF
-#   systemd:
-#     name: rsyslog@mgmt
-#     state: started
-#     daemon_reload: yes
-#
-# - name: Enable rsyslog in a VRF on boot
-#   systemd:
-#     name: rsyslog@mgmt
-#     enabled: yes
+ - name: Stop rsyslog
+   systemd:
+     name: rsyslog
+     state: stopped
+   ignore_errors: yes
+
+ - name: Disable rsyslog
+   systemd:
+     name: rsyslog
+     enabled: no
+
+- name: Copy rsyslog configuration file
+  template:
+    src: 11-remotesyslog.j2
+    dest: /etc/rsyslog.d/11-remotesyslog.conf
+    backup: yes
+
+ - name: Start rsyslog in a VRF
+   systemd:
+     name: rsyslog@mgmt
+     state: started
+     daemon_reload: yes
+
+ - name: Enable rsyslog in a VRF on boot
+   systemd:
+     name: rsyslog@mgmt
+     enabled: yes
 
 - name: Install NetQ Agent and NetQ CLI
   apt:
@@ -58,10 +64,10 @@
     - netq-apps
 
 - name: Configure NetQ Agent
-  command: sudo netq config add agent server 192.168.200.18 vrf mgmt
+  command: sudo netq config add agent server "{{ netqts }}" vrf mgmt
 
 - name: Configure NetQ CLI
-  command: sudo netq config add cli server 192.168.200.18 vrf mgmt
+  command: sudo netq config add cli server "{{ netqts }}" vrf mgmt
 
 - name: Restart NetQ Agent and NetQ CLI
   systemd:
