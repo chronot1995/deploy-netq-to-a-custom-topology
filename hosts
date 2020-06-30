@@ -4,6 +4,7 @@
 #    using topology data
 
 [switches]
+oob-mgmt-switch ansible_host=192.168.200.2
 upn ansible_host=192.168.200.3
 cox ansible_host=192.168.200.4
 colo-asr01 ansible_host=192.168.200.5
@@ -12,8 +13,9 @@ colo-core1 ansible_host=192.168.200.7
 colo-core2 ansible_host=192.168.200.8
 
 [servers]
-server1 ansible_host=192.168.200.9
-server2 ansible_host=192.168.200.10
+oob-mgmt-server ansible_host=192.168.200.1
+#server1 ansible_host=192.168.200.9
+#server2 ansible_host=192.168.200.10
 
 [all:vars]
 ansible_user=cumulus
