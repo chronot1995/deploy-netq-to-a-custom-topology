@@ -31,7 +31,7 @@
     name: ntp
     state: stopped
 
-- name: Sync time initialy
+- name: Sync time
   shell: ntpdate time.google.com
 
 - name: Start NTP
