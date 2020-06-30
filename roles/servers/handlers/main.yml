@@ -1,0 +1,10 @@
+---
+- name: restart LLDP
+  service:
+    name: lldpd
+    state: restarted
+
+- name: restart NTPD
+  service:
+    name: ntp
+    state: restarted

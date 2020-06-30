@@ -1,0 +1,120 @@
+---
+- name: Verify Minimum Software Version - Ubuntu 18.04
+  assert:
+    that: "{{ansible_lsb.release is version_compare('18.04', '>=') }}"
+    msg: >
+      "Ubuntu must be version 18.04.
+      Version {{ansible_lsb.release}} detected"
+
+- name: Install python-apt
+  apt:
+    name: ['python-apt']
+    state: latest
+
+- name: Add Ubuntu 18.04 NetQ 3.x Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb bionic netq-latest
+    state: present
+
+- name: Install Setup Packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - ntp
+    - ntpdate
+    - lldpd
+    - vim
+
+- name: Stop NTP
+  service:
+    name: ntp
+    state: stopped
+
+- name: Sync time initialy
+  shell: ntpdate time.google.com
+
+- name: Start NTP
+  service:
+    name: ntp
+    state: started
+
+- name: Autostart NTP
+  service:
+    name: ntp
+    enabled: yes
+
+- name: Correct LLDP Settings
+  lineinfile:
+    dest: /etc/lldpd.d/port_info.conf
+    line: "configure lldp portidsubtype ifname"
+    create: yes
+  notify: restart LLDP
+
+- name: Autostart LLDP
+  service:
+    name: lldpd
+    enabled: yes
+
+- name: Stop rsyslog
+  systemd:
+    name: rsyslog
+    state: stopped
+  ignore_errors: yes
+
+- name: Install NetQ Agent and NetQ CLI
+  apt:
+    pkg: "{{item}}"
+    state: present
+    update_cache: yes
+  with_items:
+    - netq-agent
+    - netq-apps
+
+- name: Start NetQ
+  systemd:
+    name: netqd
+    state: started
+    daemon_reload: yes
+
+- name: Enable NetQ Agent
+  systemd:
+    name: netqd
+    enabled: yes
+
+- name: Configure NetQ Agent
+  command: netq config add agent server "{{ netqts }}"
+  become: yes
+
+- name: Configure NetQ CLI
+  command: netq config add cli server "{{ netqts }}"
+  become: yes
+
+- name: Restart NetQ Agent and NetQ CLI
+  systemd:
+    name: netq-agent
+    state: restarted
+
+- name: Restart AIR agent (configures NetQ Agent)
+  systemd:
+    name: air-agent
+    state: restarted
+
+- name: Start rsyslog
+  systemd:
+    name: rsyslog
+    state: started
+    daemon_reload: yes
+  ignore_errors: yes
+
+- name: Reboot host and wait for it to restart
+  reboot:
+    msg: "Reboot initiated by Ansible"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 45
+    test_command: whoami
+
+- name: Flush Handlers, best practice
+  meta: flush_handlers
