@@ -3,7 +3,7 @@
   roles:
   - switches
 
-#- hosts: servers
-#  become: true
-#  roles:
-#  - servers
+- hosts: servers
+  become: true
+  roles:
+  - servers
