@@ -2,7 +2,7 @@
 
 - name: Add NetQ 3.x Repository
   apt_repository:
-    repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-3.0
+    repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-3.1
     state: present
 
 - name: Stop NTP
