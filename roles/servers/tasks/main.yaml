@@ -16,6 +16,10 @@
     repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb bionic netq-latest
     state: present
 
+- name: Change Hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
 - name: Install Setup Packages
   apt:
     name: "{{ item }}"
