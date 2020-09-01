@@ -4,7 +4,7 @@
 #    using topology data
 
 [switches]
-oob-mgmt-switch ansible_host=192.168.200.2
+#oob-mgmt-switch ansible_host=192.168.200.2
 spine01 ansible_host=192.168.200.5
 spine02 ansible_host=192.168.200.6
 spine03 ansible_host=192.168.200.7
