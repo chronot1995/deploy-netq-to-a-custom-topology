@@ -1,8 +1,7 @@
 ---
-
-- name: Add NetQ 3.x Repository
+- name: Add NetQ 4.x Repository
   apt_repository:
-    repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-3.1
+    repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-4 netq-4.0
     state: present
 
 - name: Stop NTP
@@ -52,17 +51,16 @@
 
 - name: Enable rsyslog in a VRF on boot
   systemd:
-     name: rsyslog
-     enabled: yes
+    name: rsyslog
+    enabled: yes
 
-- name: Install NetQ Agent and NetQ CLI
+- name: Install NetQ Agent on CL
   apt:
-    pkg: "{{item}}"
+    pkg: "{{ item }}"
     state: present
     update_cache: yes
   with_items:
     - netq-agent
-    - netq-apps
 
 - name: Start NetQ
   systemd:
@@ -72,8 +70,8 @@
 
 - name: Enable NetQ Agent
   systemd:
-     name: netqd
-     enabled: yes
+    name: netqd
+    enabled: yes
 
 - name: Configure NetQ Agent
   command: netq config add agent server "{{ netqts }}" vrf mgmt

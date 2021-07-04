@@ -2,7 +2,15 @@
 
 ### Description
 
-This playbook will deploy NetQ in a Custom Cumulus Air topology. The default setting in Air is to give the netq-ts server the IP address of 192.168.200.250. This value is set in the all.yaml group_vars file, in case it needs to be overridden.
+07/05/2021 - WORK IN PROGRESS FOR NETQ 4.x
+
+See the 3.x release of this repo for older versions of NetQ:
+
+```
+https://gitlab.com/nvidia-networking/systems-engineering/poc-support/deploy-netq-to-a-custom-topology/-/releases
+```
+
+This playbook will deploy NetQ in a Custom Cumulus Air topology with NetQ 4.x. The default setting in Air is to give the netq-ts server the IP address of 192.168.200.250. This value is set in the all.yaml group_vars file, in case it needs to be overridden.
 
 1. Copy this playbook down to the OOB management server with the following command:
 

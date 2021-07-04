@@ -1,0 +1,19 @@
+- name: Install NetQ Agent
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - netq-agent
+    - netq-apps
+
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: /etc/netq/.loginkeys.aes
+    dest: /etc/netq/.loginkeys.aes
+    owner: cumulus
+    group: cumulus
+  notify: reload netqagent
+
+- name: Flush Handlers, best practice
+  meta: flush_handlers

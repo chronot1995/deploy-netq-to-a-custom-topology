@@ -1,0 +1,28 @@
+- name: Add Sonic NetQ 4.0 Repository
+  apt_repository:
+    repo: deb http://apps3.cumulusnetworks.com/repos/deb buster netq-latest
+    state: present
+
+- name: Install Sonic Assist Packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - wget
+
+- name: Install NetQ Agent on Sonic nodes
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - netq-agent
+  notify: reload netqagent
+
+- name: Stop rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted
+  ignore_errors: yes
+
+- name: Flush Handlers, best practice
+  meta: flush_handlers

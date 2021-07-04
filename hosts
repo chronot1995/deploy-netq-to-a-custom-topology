@@ -4,7 +4,6 @@
 #    using topology data
 
 [switches]
-oob-mgmt-switch
 spine01
 spine02
 spine03
@@ -19,7 +18,6 @@ border01
 border02
 
 [servers]
-oob-mgmt-server
 server01
 server02
 server03
@@ -28,6 +26,10 @@ server05
 server06
 server07
 server08
+
+[oobs]
+oob-mgmt-server
+oob-mgmt-switch
 
 [all:vars]
 ansible_user=cumulus

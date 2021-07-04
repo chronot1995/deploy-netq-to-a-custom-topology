@@ -1,0 +1,11 @@
+- name: Upgrade NetQ Agent
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - netq-agent
+  notify: reload netqagent
+
+- name: Flush Handlers, best practice
+  meta: flush_handlers
