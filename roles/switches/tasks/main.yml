@@ -6,11 +6,11 @@
 
 - name: Copy Air key file
   ansible.builtin.copy:
-  src: /etc/netq/.loginkeys.aes
-  dest: /etc/netq/
-  owner: root
-  group: root
-  mode: "0666"
+    src: /etc/netq/.loginkeys.aes
+    dest: /etc/netq/
+    owner: root
+    group: root
+    mode: "0666"
   become: yes
 
 - name: Stop NTP
