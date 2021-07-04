@@ -4,6 +4,15 @@
     repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-4 netq-4.0
     state: present
 
+- name: Copy Air key file
+  ansible.builtin.copy:
+  src: /etc/netq/.loginkeys.aes
+  dest: /etc/netq/
+  owner: root
+  group: root
+  mode: "0666"
+  become: yes
+
 - name: Stop NTP
   systemd:
     name: ntp
@@ -81,12 +90,16 @@
   command: netq config add cli server "{{ netqts }}" vrf mgmt
   become: yes
 
-- name: Restart NetQ Agent and NetQ CLI
+- name: Restart NetQ Agent
   systemd:
     name: netq-agent
     state: restarted
 
 - name: Restart AIR agent (configures NetQ Agent)
   systemd:
-    name: air-agent
+    name: air-agent@mgmt.service
     state: restarted
+
+- name: Restart NetQ CLI
+  command: netq config restart cli
+  become: yes
