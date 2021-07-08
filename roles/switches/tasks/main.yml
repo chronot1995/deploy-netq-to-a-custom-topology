@@ -4,7 +4,7 @@
     repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-4 netq-4.0
     state: present
 
-- name: Copy Air key file
+- name: Copy authentication key file
   ansible.builtin.copy:
     src: /etc/netq/.loginkeys.aes
     dest: /etc/netq/
@@ -89,6 +89,10 @@
 - name: Configure NetQ CLI
   command: netq config add cli server "{{ netqts }}" vrf mgmt
   become: yes
+
+- name: Fix
+  ansible.builtin.shell:
+  cmd: sed -i 's/air.cumulusnetworks.com/air.nvidia.com/' /etc/cumulus-air/agent.ini
 
 - name: Restart NetQ Agent
   systemd:

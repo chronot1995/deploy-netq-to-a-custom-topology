@@ -36,3 +36,4 @@ ansible_user=cumulus
 ansible_become_pass=CumulusLinux!
 ansible_password=CumulusLinux!
 ansible_ssh_pass=CumulusLinux!
+ansible_python_interpreter=/usr/bin/python3
