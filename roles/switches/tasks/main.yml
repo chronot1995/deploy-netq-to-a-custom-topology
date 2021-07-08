@@ -92,7 +92,7 @@
 
 - name: Fix Temp issue with Air
   ansible.builtin.shell:
-  cmd: sed -i 's/air.cumulusnetworks.com/air.nvidia.com/' /etc/cumulus-air/agent.ini
+    cmd: sed -i 's/air.cumulusnetworks.com/air.nvidia.com/' /etc/cumulus-air/agent.ini
 
 - name: Restart NetQ Agent
   systemd:
