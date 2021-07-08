@@ -66,7 +66,7 @@
 - name: Install NetQ Agent on CL
   apt:
     pkg: "{{ item }}"
-    state: present
+    state: latest
     update_cache: yes
   with_items:
     - netq-agent
@@ -90,7 +90,7 @@
   command: netq config add cli server "{{ netqts }}" vrf mgmt
   become: yes
 
-- name: Fix
+- name: Fix Temp issue with Air
   ansible.builtin.shell:
   cmd: sed -i 's/air.cumulusnetworks.com/air.nvidia.com/' /etc/cumulus-air/agent.ini
 

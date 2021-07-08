@@ -1,2 +1,0 @@
-- name: reload netqagent
-  command: "netq config restart agent"

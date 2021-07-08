@@ -8,10 +8,10 @@
 
 - name: Install python-apt
   apt:
-    name: ['python-apt']
+    name: ["python-apt"]
     state: latest
 
-- name: Add Ubuntu 18.04 NetQ 3.x Repository
+- name: Add Ubuntu 18.04 NetQ 4.x Repository
   apt_repository:
     repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb bionic netq-latest
     state: present
@@ -68,8 +68,8 @@
 
 - name: Install NetQ Agent and NetQ CLI
   apt:
-    pkg: "{{item}}"
-    state: present
+    pkg: "{{ item }}"
+    state: latest
     update_cache: yes
   with_items:
     - netq-agent

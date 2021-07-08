@@ -8,3 +8,6 @@
   service:
     name: ntp
     state: restarted
+
+- name: reload netqagent
+  command: "netq config restart agent"
